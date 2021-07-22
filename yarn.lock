@@ -9486,7 +9486,7 @@ strapi-plugin-i18n@3.6.5:
 
 "strapi-plugin-pertinent-pages@git+https://github.com/syskin/strapi-plugin-pertinent-pages.git":
   version "1.0.0"
-  resolved "git+https://github.com/syskin/strapi-plugin-pertinent-pages.git#dbb39abdfb4cc61a90f1e2558186ecf1c0f25182"
+  resolved "git+https://github.com/syskin/strapi-plugin-pertinent-pages.git#791867aeb0cb146a5bacc594dddbf259e2c5181e"
 
 strapi-plugin-upload@3.6.5:
   version "3.6.5"
