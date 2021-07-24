@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "name": "pages",
+    "description": "Pages model"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 60
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 50
+
+    },
+    "root": {
+      "type": "json"
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "description": {
+      "type": "text"
+    },
+    "isDeletable": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

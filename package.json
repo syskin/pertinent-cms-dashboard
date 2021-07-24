@@ -22,7 +22,6 @@
     "strapi-plugin-i18n": "3.6.5",
     "strapi-plugin-upload": "3.6.5",
     "strapi-plugin-users-permissions": "3.6.5",
-    "strapi-plugin-pertinent-pages": "git+https://github.com/syskin/strapi-plugin-pertinent-pages.git",
     "strapi-utils": "3.6.5"
   },
   "author": {
