@@ -155,11 +155,11 @@ module.exports = {
 
       if (!result) return ctx.badRequest(`No page found`);
 
-      let data = body;
+      const {name, slug, description} = body;
 
       const updateData = await strapi
         .query(`page`, `pertinent`)
-        .update({ id: params.id }, data);
+        .update(params, {name, slug, description});
 
       ctx.send({ message: `Page data updated`, page: updateData });
     } catch (e) {
