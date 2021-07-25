@@ -13,7 +13,7 @@ module.exports = {
    */
   meta: async (ctx) => {
     try {
-      const result = await strapi.query(`pages`, `pertinent`).find();
+      const result = await strapi.query(`page`, `pertinent`).find();
       const pages = [];
       if (result && result.length > 0) {
         const allowed = [
@@ -51,7 +51,7 @@ module.exports = {
     try {
       const params = ctx.params;
       const result = await strapi
-        .query(`pages`, `pertinent`)
+        .query(`page`, `pertinent`)
         .findOne({ id: params.id });
 
       let pageData = {};
@@ -61,7 +61,6 @@ module.exports = {
         `description`,
         `isDeletable`,
         `name`,
-        `root`,
         `slug`,
         `updatedAt`,
         `createdAt`,
@@ -94,14 +93,17 @@ module.exports = {
         return ctx.badRequest(`Slug must be defined`);
       }
 
-      const result = await strapi
-        .query(`pages`, `pertinent`)
+      const pageData = await strapi
+        .query(`page`, `pertinent`)
         .findOne({ slug: data.slug });
 
-      if(!result) return ctx.badRequest(`This page doesn't exists`);
+      if(!pageData) return ctx.badRequest(`This page doesn't exists`);
 
+      const tags = await strapi.query(`tag`, `pertinent`).find({parent_id: pageData.id, parent_type: `page`})
 
-      ctx.send(data);
+      if(tags) pageData.tags = tags
+
+      ctx.send(pageData);
     } catch (e) {
       return ctx.badRequest(`An error occured`);
     }
@@ -121,7 +123,7 @@ module.exports = {
       }
 
       const checkExistingPages = await strapi
-        .query(`pages`, `pertinent`)
+        .query(`page`, `pertinent`)
         .count({ _or: [{ name: data.name }, { slug: data.slug }] });
 
       if (checkExistingPages && checkExistingPages > 0) {
@@ -129,7 +131,7 @@ module.exports = {
       }
 
       await strapi
-        .query(`pages`, `pertinent`)
+        .query(`page`, `pertinent`)
         .create({ name: data.name, slug: data.slug });
 
       ctx.send({ message: `Page created successfully` });
@@ -148,7 +150,7 @@ module.exports = {
       const params = ctx.params;
       const body = ctx.request.body;
       const result = await strapi
-        .query(`pages`, `pertinent`)
+        .query(`page`, `pertinent`)
         .findOne({ id: params.id });
 
       if (!result) return ctx.badRequest(`No page found`);
@@ -156,7 +158,7 @@ module.exports = {
       let data = body;
 
       const updateData = await strapi
-        .query(`pages`, `pertinent`)
+        .query(`page`, `pertinent`)
         .update({ id: params.id }, data);
 
       ctx.send({ message: `Page data updated`, data: updateData });
@@ -174,7 +176,7 @@ module.exports = {
     try {
       const params = ctx.params;
       const result = await strapi
-        .query(`pages`, `pertinent`)
+        .query(`page`, `pertinent`)
         .findOne({ id: params.id });
 
       if (!result) return ctx.badRequest(`No page found`);
@@ -182,7 +184,7 @@ module.exports = {
       if (!result.isDeletable)
         return ctx.badRequest(`This page is not deletable`);
 
-      await strapi.query(`pages`, `pertinent`).delete({ id: params.id });
+      await strapi.query(`page`, `pertinent`).delete({ id: params.id });
 
       ctx.send({ message: `Page data updated` });
     } catch (e) {

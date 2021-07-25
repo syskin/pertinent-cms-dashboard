@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tag",
+  "info": {
+    "name": "tag",
+    "description": "Tag model"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "parent_type": {
+      "type": "string",
+      "required": true
+    },
+    "parent_id": {
+      "type": "string",
+      "required": true
+    },
+    "tag_style": {
+      "type": "json"
+    },
+    "tag_type": {
+      "type": "string"
+    },
+    "children_id" : {
+      "type": "json"
+    },
+    "tag_content": {
+      "type": "richtext"
+    },
+    "tag_depth": {
+      "type": "integer",
+      "min": 0,
+      "required": true
+    },
+    "tag_order": {
+      "type": "integer",
+      "min": 0,
+      "required": true
+    }
+  }
+}

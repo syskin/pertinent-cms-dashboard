@@ -1,9 +1,9 @@
 {
   "kind": "collectionType",
-  "collectionName": "pages",
+  "collectionName": "page",
   "info": {
-    "name": "pages",
-    "description": "Pages model"
+    "name": "page",
+    "description": "Page model"
   },
   "options": {
     "increments": true,
@@ -23,9 +23,6 @@
       "unique": true,
       "maxLength": 50
 
-    },
-    "root": {
-      "type": "json"
     },
     "title": {
       "type": "string",

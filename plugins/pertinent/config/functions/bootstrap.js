@@ -30,7 +30,7 @@ module.exports = async () => {
     }
 
     const homePage = await strapi
-      .query(`pages`, `pertinent`)
+      .query(`page`, `pertinent`)
       .find({ slug: `/` });
     if (homePage.length === 0) {
       const data = {
@@ -38,7 +38,7 @@ module.exports = async () => {
         slug: `/`,
         isDeletable: false,
       };
-      await strapi.query(`pages`, `pertinent`).create(data);
+      await strapi.query(`page`, `pertinent`).create(data);
       strapi.log.info(`Home page was successfully created.`);
     }
   } catch (e) {
