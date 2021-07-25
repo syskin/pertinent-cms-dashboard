@@ -99,7 +99,7 @@ module.exports = {
 
       if(!pageData) return ctx.badRequest(`This page doesn't exists`);
 
-      const tags = await strapi.query(`tag`, `pertinent`).find({parent_id: pageData.id, parent_type: `page`})
+      const tags = await strapi.query(`tag`, `pertinent`).find({parent_id: pageData.id, parent_type: `page`}, ['id'])
 
       if(tags) pageData.tags = tags
 
@@ -130,11 +130,11 @@ module.exports = {
         return ctx.badRequest(`Page already exists`);
       }
 
-      await strapi
+      const pageData = await strapi
         .query(`page`, `pertinent`)
-        .create({ name: data.name, slug: data.slug });
+        .create(data);
 
-      ctx.send({ message: `Page created successfully` });
+      ctx.send({ message: `Page created successfully`, page: pageData });
     } catch (e) {
       return ctx.badRequest(`An error occured`, e);
     }
@@ -161,7 +161,7 @@ module.exports = {
         .query(`page`, `pertinent`)
         .update({ id: params.id }, data);
 
-      ctx.send({ message: `Page data updated`, data: updateData });
+      ctx.send({ message: `Page data updated`, page: updateData });
     } catch (e) {
       return ctx.badRequest(`An error occured`);
     }
@@ -186,7 +186,7 @@ module.exports = {
 
       await strapi.query(`page`, `pertinent`).delete({ id: params.id });
 
-      ctx.send({ message: `Page data updated` });
+      ctx.send({ message: `Page deleted successfully` });
     } catch (e) {
       return ctx.badRequest(`An error occured`);
     }
