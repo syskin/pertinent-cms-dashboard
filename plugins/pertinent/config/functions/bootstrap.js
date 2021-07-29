@@ -32,7 +32,8 @@ module.exports = async () => {
     const homePage = await strapi
       .query(`page`, `pertinent`)
       .find({ slug: `/` });
-    if (homePage.length === 0) {
+      
+    if (homePage && homePage.length === 0) {
       const data = {
         name: `Home`,
         slug: `/`,
