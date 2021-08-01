@@ -47,6 +47,30 @@
       "config": {
         "policies": ["plugins::users-permissions.rateLimit"]
       }
+    },
+    {
+      "method": "POST",
+      "path": "/tags",
+      "handler": "Tag.create",
+      "config": {
+        "policies": ["plugins::users-permissions.rateLimit"]
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/tags/:id",
+      "handler": "Tag.update",
+      "config": {
+        "policies": ["plugins::users-permissions.rateLimit"]
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/tags/:id",
+      "handler": "Tag.delete",
+      "config": {
+        "policies": ["plugins::users-permissions.rateLimit"]
+      }
     }
   ]
 }

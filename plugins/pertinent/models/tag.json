@@ -19,24 +19,24 @@
       "type": "string",
       "required": true
     },
-    "tag_style": {
+    "style": {
       "type": "json"
     },
-    "tag_type": {
+    "type": {
       "type": "string"
     },
     "children_id" : {
       "type": "json"
     },
-    "tag_content": {
+    "content": {
       "type": "richtext"
     },
-    "tag_depth": {
+    "depth": {
       "type": "integer",
       "min": 0,
       "required": true
     },
-    "tag_order": {
+    "order": {
       "type": "integer",
       "min": 0,
       "required": true
