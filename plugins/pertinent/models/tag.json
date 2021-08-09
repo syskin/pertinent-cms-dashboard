@@ -11,13 +11,17 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "parent_type": {
+    "wrapper_type": {
+      "type": "string",
+      "required": true
+    },
+    "wrapper_id": {
       "type": "string",
       "required": true
     },
     "parent_id": {
       "type": "string",
-      "required": true
+      "default": null
     },
     "style": {
       "type": "json"

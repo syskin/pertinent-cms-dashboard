@@ -14,10 +14,17 @@ module.exports = {
     create: async (ctx) => {
         try {
         const data = ctx.request.body;
-
+        
         const tagData = await strapi
             .query(`tag`, `pertinent`)
-            .create(data);
+            .create({
+                parent_id: data.parentId,
+                wrapper_type: data.wrapperType, 
+                wrapper_id: data.wrapperId, 
+                type: data.type, 
+                order: data.order, 
+                depth: data.depth
+            });
 
         ctx.send({ message: `Tag created successfully`, tag: tagData });
         } catch (e) {
