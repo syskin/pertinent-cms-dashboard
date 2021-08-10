@@ -49,6 +49,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/tags",
+      "handler": "Tag.get",
+      "config": {
+        "policies": ["plugins::users-permissions.rateLimit"]
+      }
+    },
+    {
       "method": "POST",
       "path": "/tags",
       "handler": "Tag.create",

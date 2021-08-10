@@ -99,10 +99,6 @@ module.exports = {
 
       if(!pageData) return ctx.badRequest(`This page doesn't exists`);
 
-      const tags = await strapi.query(`tag`, `pertinent`).find({parent_id: pageData.id, parent_type: `page`}, ['id'])
-
-      if(tags) pageData.tags = tags
-
       ctx.send(pageData);
     } catch (e) {
       return ctx.badRequest(`An error occured`);

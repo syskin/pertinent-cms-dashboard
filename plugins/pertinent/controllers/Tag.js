@@ -7,6 +7,26 @@
 
 module.exports = {
     /**
+     * Get tags.
+     *
+     * @return {Object}
+     */
+    get: async (ctx) => {
+        try {
+        
+            console.log(ctx.request)
+
+            const tagsData = await strapi
+            .query(`tag`, `pertinent`)
+            .find();
+
+            ctx.send(tagsData);
+        } catch (e) {
+            return ctx.badRequest(`An error occured`);
+        }
+    },
+
+    /**
      * Create a tag.
      *
      * @return {Object}
