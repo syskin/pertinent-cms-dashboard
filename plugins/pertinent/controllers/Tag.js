@@ -13,12 +13,13 @@ module.exports = {
      */
     get: async (ctx) => {
         try {
-        
-            console.log(ctx.request)
-
+            const filter = ctx.request.query
             const tagsData = await strapi
             .query(`tag`, `pertinent`)
-            .find();
+            .find({
+                wrapper_id: filter.wrapperId,
+                wrapper_type: filter.wrapperType
+            });
 
             ctx.send(tagsData);
         } catch (e) {
