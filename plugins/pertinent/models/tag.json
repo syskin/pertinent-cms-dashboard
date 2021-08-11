@@ -20,7 +20,7 @@
       "required": true
     },
     "parent_id": {
-      "type": "string",
+      "type": "integer",
       "default": null
     },
     "style": {
@@ -28,9 +28,6 @@
     },
     "type": {
       "type": "string"
-    },
-    "children_id" : {
-      "type": "json"
     },
     "content": {
       "type": "richtext"
