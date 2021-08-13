@@ -34,22 +34,24 @@ module.exports = {
      */
     create: async (ctx) => {
         try {
-        const data = ctx.request.body;
-        
-        const tagData = await strapi
+            const data = ctx.request.body;
+            const {parent_id, wrapper_type, wrapper_id, type, order, depth} = data
+
+            const tagData = await strapi
             .query(`tag`, `pertinent`)
             .create({
-                parent_id: data.parentId,
-                wrapper_type: data.wrapperType, 
-                wrapper_id: data.wrapperId, 
-                type: data.type, 
-                order: data.order, 
-                depth: data.depth
+                parent_id,
+                wrapper_type, 
+                wrapper_id, 
+                type, 
+                order, 
+                depth,
             });
 
-        ctx.send({ message: `Tag created successfully`, tag: tagData });
+            ctx.send({ message: `Tag created successfully`, tag: tagData });
         } catch (e) {
-        return ctx.badRequest(`An error occured`);
+            console.log(e)
+            return ctx.badRequest(`An error occured`);
         }
     },
 
