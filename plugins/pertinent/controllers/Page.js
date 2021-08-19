@@ -87,7 +87,7 @@ module.exports = {
    */
   slug: async (ctx) => {
     try {
-      const data = ctx.request.body;
+      const data = ctx.params;
 
       if (!data.slug) {
         return ctx.badRequest(`Slug must be defined`);
@@ -95,11 +95,30 @@ module.exports = {
 
       const pageData = await strapi
         .query(`page`, `pertinent`)
-        .findOne({ slug: data.slug });
+        .findOne({ slug: `/${data.slug}` });
 
-      if(!pageData) return ctx.badRequest(`This page doesn't exists`);
+      if(!pageData) return ctx.notFound(`This page doesn't exists`);
 
-      ctx.send(pageData);
+      let tags = await strapi
+        .query(`tag`, `pertinent`)
+        .find({ wrapper_id: pageData.id, wrapper_type: 'PAGE' });
+
+      tags = tags.map(tag => {
+        return { id: tag.id, 
+                wrapper_type: tag.wrapper_type,
+                wrapper_id: tag.wrapper_id,
+                parent_id: tag.parent_id,
+                style: tag.style,
+                type: tag.type,
+                children_id: tag.children_id,
+                content: tag.content,
+                depth: tag.depth,
+                order: tag.order
+              } 
+            }
+          )
+
+      ctx.send({...pageData, tags});
     } catch (e) {
       return ctx.badRequest(`An error occured`);
     }

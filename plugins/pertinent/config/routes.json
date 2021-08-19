@@ -9,8 +9,8 @@
       }
     },
     {
-      "method": "POST",
-      "path": "/pages/slug",
+      "method": "GET",
+      "path": "/pages/slug/:slug",
       "handler": "Page.slug",
       "config": {
         "policies": ["plugins::users-permissions.rateLimit"]
@@ -53,7 +53,7 @@
       "path": "/tags",
       "handler": "Tag.get",
       "config": {
-        "policies": ["plugins::users-permissions.rateLimit"]
+        "policies": []
       }
     },
     {
@@ -61,7 +61,7 @@
       "path": "/tags",
       "handler": "Tag.create",
       "config": {
-        "policies": ["plugins::users-permissions.rateLimit"]
+        "policies": []
       }
     },
     {
@@ -69,7 +69,7 @@
       "path": "/tags/:id",
       "handler": "Tag.update",
       "config": {
-        "policies": ["plugins::users-permissions.rateLimit"]
+        "policies": []
       }
     },
     {
@@ -77,7 +77,7 @@
       "path": "/tags/:id",
       "handler": "Tag.delete",
       "config": {
-        "policies": ["plugins::users-permissions.rateLimit"]
+        "policies": []
       }
     }
   ]
