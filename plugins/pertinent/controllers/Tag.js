@@ -89,11 +89,32 @@ module.exports = {
         try {
         const params = ctx.params;
 
-        await strapi.query(`tag`, `pertinent`).delete({ id: params.id });
+        const tagToDelete = await strapi.query(`tag`, `pertinent`).findOne({id: params.id});
+        const tags = await strapi.query(`tag`, `pertinent`).find({ wrapper_id: tagToDelete.wrapper_id, wrapper_type: tagToDelete.wrapper_type });
+        
+        const tagsIdToDelete = await getAllChildIds(tagToDelete.id, tags);
+        tagsIdToDelete.push(tagToDelete.id)
+        await strapi.query(`tag`, `pertinent`).delete({id_in: tagsIdToDelete});
 
         ctx.send({ message: `Tag deleted successfully` });
         } catch (e) {
-        return ctx.badRequest(`An error occured`);
+            console.log(e)
+            return ctx.badRequest(`An error occured`);
         }
     },
 };
+
+
+function getAllChildIds(tagIdToDelete, tags){
+    let ids = []
+    const children = tags.filter(tag => tagIdToDelete === tag.parent_id)
+    
+   children.map(child => {
+       const checkChildren = tags.filter(tag => child.id === tag.parent_id)
+        if(checkChildren && checkChildren.length > 0 ) {
+            ids = [...ids, ...getAllChildIds(child.id, tags)]
+        }
+        ids.push(child.id)
+    })
+    return ids
+}
