@@ -40,7 +40,7 @@ module.exports = {
             const tagData = await strapi
             .query(`tag`, `pertinent`)
             .create({
-                parent_id,
+                parent_id : parent_id || null,
                 wrapper_type, 
                 wrapper_id, 
                 type, 
@@ -50,7 +50,6 @@ module.exports = {
 
             ctx.send({ message: `Tag created successfully`, tag: tagData });
         } catch (e) {
-            console.log(e)
             return ctx.badRequest(`An error occured`);
         }
     },
