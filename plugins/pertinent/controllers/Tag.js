@@ -93,6 +93,7 @@ module.exports = {
         
         const tagsIdToDelete = await getAllChildIds(tagToDelete.id, tags);
         tagsIdToDelete.push(tagToDelete.id)
+        
         await strapi.query(`tag`, `pertinent`).delete({id_in: tagsIdToDelete});
 
         ctx.send({ message: `Tag deleted successfully` });
@@ -106,11 +107,25 @@ module.exports = {
 
 function getAllChildIds(tagIdToDelete, tags){
     let ids = []
+    /** 
+     * Get all tags with a parent corresponding to 
+     * the tag id to delete.
+    */
     const children = tags.filter(tag => tagIdToDelete === tag.parent_id)
-    
-   children.map(child => {
-       const checkChildren = tags.filter(tag => child.id === tag.parent_id)
-        if(checkChildren && checkChildren.length > 0 ) {
+
+    children.map(child => {
+        
+        /**
+         * Check for each tag, if it has also a child 
+         * (parent_id corresponds to tagId and depth is bigger)
+         */
+        const checkChild = tags.filter(tag => (child.id === tag.parent_id && child.depth < tag.depth))
+        
+        /**
+         * If it has children, we continue deeper in the tag tree
+         */
+        if (checkChild && checkChild.length > 0 ) {
+            console.log(`Child ${child.id} got children`)
             ids = [...ids, ...getAllChildIds(child.id, tags)]
         }
         ids.push(child.id)
